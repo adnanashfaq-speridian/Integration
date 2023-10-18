@@ -4,5 +4,6 @@ public with sharing class TestingClass {
         String var2 = '';
         String var3 = '';
         String var4 = '';
+        String var5 = '';
     }
 }
