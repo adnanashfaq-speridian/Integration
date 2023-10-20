@@ -25,9 +25,9 @@ public class IntegrationClass {
         //Change “ap4” in url to your Destination Org Instance
         req.setEndpoint('https://speridiantechnologiesllc3.lightning.force.com/services/oauth2/token');
         HttpResponse res=h.send(req);
-        System.debug(res.getBody()+'By-AP-1986-Response');
+        //System.debug(res.getBody()+'By-AP-1986-Response');
         deserializeResponse resp1= (deserializeResponse)JSON.deserialize(res.getBody(),deserializeResponse.class);
-        System.debug(resp1+'By-AP-deserializeresponse');
+        //System.debug(resp1+'By-AP-deserializeresponse');
         return resp1.access_token;
     }
     
