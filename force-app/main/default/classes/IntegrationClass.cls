@@ -7,8 +7,8 @@ public class IntegrationClass {
     String username='dev.adnan22-u2gn@force.com';
     //Your Destination orgPassword+Security Token
     String password='Speridian@12346Cel800D5g00000L8SQV8885g00000A1i00wtQWqpNd0MjXUWxOCvETHeyU90zpAnn6yOl6xRBDKwMbMLIZ3KoQ8YiPiLoGinPzGavt5bMO';
-    String accesstoken_url='https://login.salesforce.com/services/oauth2/token';
-    String authurl='https://login.salesforce.com/services/oauth2/authorize';
+    String accesstoken_url='https://speridiantechnologiesllc3.lightning.force.com/services/oauth2/token';
+    String authurl='https://speridiantechnologiesllc3.lightning.force.com/services/oauth2/authorize';
     public class deserializeResponse {
         public String id;
         public String access_token;
@@ -22,7 +22,7 @@ public class IntegrationClass {
         req.setBody(reqbody);
         req.setMethod('POST');
         //Change “ap4” in url to your Destination Org Instance
-        req.setEndpoint('https://ap4.salesforce.com/services/oauth2/token');
+        req.setEndpoint('https://speridiantechnologiesllc3.lightning.force.com/services/oauth2/token');
         HttpResponse res=h.send(req);
         System.debug(res.getBody()+'By-AP-1986-Response');
         deserializeResponse resp1= (deserializeResponse)JSON.deserialize(res.getBody(),deserializeResponse.class);
@@ -36,7 +36,7 @@ public class IntegrationClass {
         System.debug(accessToken+'###AP');
         if(accessToken!=null){
             //Change “ap4” in url to your Destination Org
-            String endPoint='https://ap4.salesforce.com/services/data/v32.0/sobjects/Account';  
+            String endPoint='https://speridiantechnologiesllc3.lightning.force.com/services/data/v32.0/sobjects/Account';  
             String jsonstr='{"Name":"'+ Accname +'","Phone":"'+ Phone +'","Website":"'+ Website +'"}';
             Http h2= new Http();
             HttpRequest req2= new HttpRequest();
