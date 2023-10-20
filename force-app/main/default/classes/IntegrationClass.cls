@@ -9,13 +9,14 @@ public class IntegrationClass {
     String password='Speridian@12346Cel800D5g00000L8SQV8885g00000A1i00wtQWqpNd0MjXUWxOCvETHeyU90zpAnn6yOl6xRBDKwMbMLIZ3KoQ8YiPiLoGinPzGavt5bMO';
     String accesstoken_url='https://speridiantechnologiesllc3.lightning.force.com/services/oauth2/token';
     String authurl='https://speridiantechnologiesllc3.lightning.force.com/services/oauth2/authorize';
+    
     public class deserializeResponse {
         public String id;
         public String access_token;
     }
+    
     public String ReturnAccessToken(IntegrationClass Acc){
-        String reqbody = 'grant_type=password&client_id='+clientId+'&client_secret='
-        +clientSecret+'&username='+username+'&password='+password;
+        String reqbody = 'grant_type=password&client_id='+clientId+'&client_secret='+clientSecret+'&username='+username+'&password='+password;
         // String reqbody='{“grant_type”:”password”,”client_id”:clientId,”client_secret”:clientSecret,"username":username,"password":password}';
         Http h= new Http();
         HttpRequest req= new HttpRequest();
@@ -29,6 +30,7 @@ public class IntegrationClass {
         System.debug(resp1+'By-AP-deserializeresponse');
         return resp1.access_token;
     }
+    
     @future(callout=true)
     public static void createAccount(String Accname, String Phone, String Website){
         IntegrationClass acc1= new IntegrationClass();
@@ -52,5 +54,4 @@ public class IntegrationClass {
             System.debug('### Deserialized Response ###'+deresp);
         }
     }
-
 }
