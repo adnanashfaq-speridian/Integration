@@ -86,8 +86,8 @@ public without sharing class IntegrationClass {
         System.debug(accessToken + '###Access Token acc');
         if(accessToken!=null){
             
-            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Account/'+AccountId;  
-            //String endPoint='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/data/v32.0/sobjects/Account/'+AccountId; 
+            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Account/'+externalID;  
+            //String endPoint='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/data/v32.0/sobjects/Account/'+externalID; 
             
             string jsonstr = generateJSONFormatDataforAccount(AccountId);
             Http h2= new Http();

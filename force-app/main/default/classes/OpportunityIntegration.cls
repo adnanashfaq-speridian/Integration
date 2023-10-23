@@ -78,8 +78,8 @@ public without sharing class OpportunityIntegration {
         System.debug(accessToken + '###Access Token opp');
         if(accessToken!=null){
             
-            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Opportunity';  
-            //String endPoint='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/data/v32.0/sobjects/Opportunity/'+OpportunityId;  
+            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Opportunity/'+externalID;  
+            //String endPoint='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/data/v32.0/sobjects/Opportunity/'+externalID;  
             
             string jsonstr = generateJSONFormatDataforOpportunity(OpportunityId);
             Http h2= new Http();
