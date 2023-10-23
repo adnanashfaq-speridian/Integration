@@ -55,10 +55,10 @@ public without sharing class IntegrationClass {
    
     public static string generateJSONFormatDataforAccount(Id AccountId){
         JSONGenerator jsGen = JSON.createGenerator(true);
-        jsGen.writeStartObject();  
+      
         
         for(Account acc : [SELECT Id, name, website, Phone FROM Account WHERE Id =: AccountId]){
-            jsGen.writeFieldName('ConatctData');
+            
             jsGen.writeStartObject();
             jsGen.writeStringField('Name', acc.Name);
             jsGen.writeStringField('website', acc.website);
@@ -66,7 +66,7 @@ public without sharing class IntegrationClass {
             jsGen.writeEndObject();
         }
         
-        jsGen.writeEndObject();
+     
         String jsonData = jsGen.getAsString();
         System.debug('json format Data==> ' + jsonData);
         return jsonData;
