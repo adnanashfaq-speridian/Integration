@@ -10,6 +10,7 @@ Trigger AccountTrigger on Account (after insert , after update){
 
     if(trigger.isUpdate){
         for(Account a:Trigger.new) {
+            System.debug('a.IsFromIntegration__c ' + a.IsFromIntegration__c);
             if(a.IsFromIntegration__c == false && trigger.oldmap.get(a.id).IsFromIntegration__c == true){
                 IntegrationClass.updateAccount(a.id); 
             }
