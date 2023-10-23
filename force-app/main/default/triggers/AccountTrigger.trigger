@@ -1,4 +1,4 @@
-Trigger AccountTrigger on Account (after insert , after update){
+Trigger AccountTrigger on Account (after insert , before update , after update){
     
     if(trigger.isInsert){
         for(Account a:Trigger.new) {
@@ -8,10 +8,21 @@ Trigger AccountTrigger on Account (after insert , after update){
         }   
     } 
 
-    if(trigger.isUpdate){
+    if(trigger.isUpdate && trigger.isBefore){
         for(Account a:Trigger.new) {
-            System.debug('a.IsFromIntegration__c ' + a.IsFromIntegration__c);
-            if(a.IsFromIntegration__c == false && trigger.oldmap.get(a.id).IsFromIntegration__c == true){
+            if(a.IsFromIntegration__c == true ){
+                a.IsFromIntegration__c = false;
+                a.Integration_Action__c = 'NO';
+            }
+            else{
+                a.Integration_Action__c = 'YES';
+            }
+        }   
+    }
+
+    if(trigger.isUpdate && trigger.isAfter){
+        for(Account a:Trigger.new) {
+            if(a.Integration_Action__c == 'YES'){
                 IntegrationClass.updateAccount(a.id); 
             }
         }   
