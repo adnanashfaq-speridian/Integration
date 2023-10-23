@@ -100,7 +100,7 @@ public without sharing class IntegrationClass {
             req2.setEndpoint(endPoint);
             HttpResponse res2=h2.send(req2);
             System.debug(res2+'###a###');
-            deserializeResponse deresp= (deserializeResponse)System.JSON.deserialize(res2.getBody(),deserializeResponse.class);
+          //  deserializeResponse deresp= (deserializeResponse)System.JSON.deserialize(res2.getBody(),deserializeResponse.class);
             System.debug('### Deserialized Response ###'+deresp);
         }
     }
