@@ -1,14 +1,9 @@
 public without sharing class ContactIntegration {
-    //Use your Client Id 
-    String clientId ='3MVG9fe4g9fhX0E59dfIZ4Ri9oO_n.RP1X.8sz6v5lYl6B7KTifXSvxS.9NGzmZ3JqdanB_M7BPU6tKqzqqdi';
-    //Use your Client Secret
-    String clientsecret='610501FCA4A4A110A70D0FB0C7EBC35D9B6C65F3A8D70570F56945A430B7ACAF';
-    //Your Destination org username
-    //String username='dev.adnan22-u2gn@force.com';
-    //Your Destination orgPassword+Security Token
-    String accessTokenurl='https://speridiantechnologiesllc3.my.salesforce.com/services/oauth2/token';
-    //String authurl='https://speridiantechnologiesllc3.lightning.force.com/services/oauth2/authorize';
     
+    String clientId ='3MVG9fe4g9fhX0E59dfIZ4Ri9oO_n.RP1X.8sz6v5lYl6B7KTifXSvxS.9NGzmZ3JqdanB_M7BPU6tKqzqqdi';
+    String clientsecret='610501FCA4A4A110A70D0FB0C7EBC35D9B6C65F3A8D70570F56945A430B7ACAF';
+    String accessTokenurl='https://speridiantechnologiesllc3.my.salesforce.com/services/oauth2/token';
+   
     public class deserializeResponse {
         public String id;
         public String access_token;
@@ -28,6 +23,20 @@ public without sharing class ContactIntegration {
         return resp1.access_token;
     }
     
+    public static string generateJSONFormatDataforContact(Id ContactId){
+        JSONGenerator jsGen = JSON.createGenerator(true);      
+        
+        for(Contact con : [SELECT Id, LastName FROM Contact WHERE Id =: ContactId]){
+            
+            jsGen.writeStartObject();
+            jsGen.writeStringField('LastName', con.LastName);
+            jsGen.writeEndObject();
+        }
+        String jsonData = jsGen.getAsString();
+        System.debug('json format Data==> ' + jsonData);
+        return jsonData;
+    }
+
     @future(callout=true)
     public static void createContact(String ContactId){
         ContactIntegration acc1= new ContactIntegration();
@@ -52,18 +61,29 @@ public without sharing class ContactIntegration {
             System.debug('### Deserialized Response ###'+deresp);
         }
     }
-   
-    public static string generateJSONFormatDataforContact(Id ContactId){
-        JSONGenerator jsGen = JSON.createGenerator(true);      
-        
-        for(Contact con : [SELECT Id, LastName FROM Contact WHERE Id =: ContactId]){
-            
-            jsGen.writeStartObject();
-            jsGen.writeStringField('LastName', con.LastName);
-            jsGen.writeEndObject();
+
+    @future(callout=true)
+    public static void updateContact(String ContactId){
+        ContactIntegration acc1= new ContactIntegration();
+        String accessToken=acc1.ReturnAccessToken(acc1);
+        System.debug(accessToken + '###Access Token con');
+        if(accessToken!=null){
+            //Change “ap4” in url to your Destination Org
+            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Contact';  
+            //String jsonstr='{"Name":"'+ Accname +'","Phone":"'+ Phone +'","Website":"'+ Website +'"}';
+            string jsonstr = generateJSONFormatDataforContact(ContactId);
+            Http h2= new Http();
+            HttpRequest req2= new HttpRequest();
+            req2.setHeader('Authorization','Bearer ' + accessToken);
+            req2.setHeader('Content-Type','application/json');
+            req2.setHeader('accept','application/json');
+            req2.setBody(jsonstr);
+            req2.setMethod('POST');
+            req2.setEndpoint(endPoint);
+            HttpResponse res2=h2.send(req2);
+            System.debug(res2+'###a###');
+            deserializeResponse deresp= (deserializeResponse)System.JSON.deserialize(res2.getBody(),deserializeResponse.class);
+            System.debug('### Deserialized Response ###'+deresp);
         }
-        String jsonData = jsGen.getAsString();
-        System.debug('json format Data==> ' + jsonData);
-        return jsonData;
     }
 }
