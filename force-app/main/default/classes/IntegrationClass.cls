@@ -61,8 +61,12 @@ public without sharing class IntegrationClass {
             
             jsGen.writeStartObject();
             jsGen.writeStringField('Name', acc.Name);
-            jsGen.writeStringField('website', acc.website);
-            jsGen.writeStringField('Phone', acc.Phone);
+            if(acc.website != null){
+                jsGen.writeStringField('website', acc.website);
+            }
+            if( acc.Phone != null){
+                jsGen.writeStringField('Phone', acc.Phone);
+            }
             jsGen.writeEndObject();
         }
         
