@@ -1,13 +1,13 @@
 public without sharing class IntegrationClass {
     //FOR ORIGINAL ORG
-    String clientId ='3MVG9fe4g9fhX0E59dfIZ4Ri9oO_n.RP1X.8sz6v5lYl6B7KTifXSvxS.9NGzmZ3JqdanB_M7BPU6tKqzqqdi';
+    /*String clientId ='3MVG9fe4g9fhX0E59dfIZ4Ri9oO_n.RP1X.8sz6v5lYl6B7KTifXSvxS.9NGzmZ3JqdanB_M7BPU6tKqzqqdi';
     String clientsecret='610501FCA4A4A110A70D0FB0C7EBC35D9B6C65F3A8D70570F56945A430B7ACAF';
-    String accessTokenurl='https://speridiantechnologiesllc3.my.salesforce.com/services/oauth2/token';
+    String accessTokenurl='https://speridiantechnologiesllc3.my.salesforce.com/services/oauth2/token';*/
 
     //FOR SCRATCH ORG
-    /*String clientId ='3MVG9WiZ4_mwZLgeL0hLQf_Ho8asfwaNJE.VteLhbiVbP937X0LY9IUojta29NzECMvNqzXgW5lOe3jtu5ud3';
+    String clientId ='3MVG9WiZ4_mwZLgeL0hLQf_Ho8asfwaNJE.VteLhbiVbP937X0LY9IUojta29NzECMvNqzXgW5lOe3jtu5ud3';
     String clientsecret='4DB160B55742CBC791CC195DCAC3D3358699FF5F5E60F9B1E6CBDAA863E8EA18';
-    String accessTokenurl='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/oauth2/token';*/
+    String accessTokenurl='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/oauth2/token';
     
     public class deserializeResponse {
         public String id;
@@ -60,7 +60,7 @@ public without sharing class IntegrationClass {
         System.debug(accessToken+'###AP');
         if(accessToken!=null){
             //Change “ap4” in url to your Destination Org
-            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Account';  
+            String endPoint='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/data/v32.0/sobjects/Account';  
             //String jsonstr='{"Name":"'+ Accname +'","Phone":"'+ Phone +'","Website":"'+ Website +'"}';
             string jsonstr = generateJSONFormatDataforAccount(AccountId);
             Http h2= new Http();
@@ -85,7 +85,7 @@ public without sharing class IntegrationClass {
         System.debug(accessToken + '###Access Token acc');
         if(accessToken!=null){
             //Change “ap4” in url to your Destination Org
-            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Account'+AccountId;  
+            String endPoint='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/data/v32.0/sobjects/Account/'+AccountId;  
             //String jsonstr='{"Name":"'+ Accname +'","Phone":"'+ Phone +'","Website":"'+ Website +'"}';
             string jsonstr = generateJSONFormatDataforAccount(AccountId);
             Http h2= new Http();
