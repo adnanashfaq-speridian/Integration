@@ -18,7 +18,7 @@ public without sharing class IntegrationClass {
         String reqbody = 'grant_type=client_credentials&client_id='+clientId+'&client_secret='+clientSecret;
         Http h= new Http();
         HttpRequest req= new HttpRequest();
-        req.setHeader('Content-Type', 'application/json');
+        req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
         req.setBody(reqbody);
         req.setMethod('POST');
         
