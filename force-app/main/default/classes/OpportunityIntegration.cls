@@ -72,7 +72,7 @@ public without sharing class OpportunityIntegration {
     }
 
     @future(callout=true)
-    public static void updateOpportunity(String OpportunityId){
+    public static void updateOpportunity(String OpportunityId, String externalID){
         OpportunityIntegration acc1= new OpportunityIntegration();
         String accessToken=acc1.ReturnAccessToken(acc1);
         System.debug(accessToken + '###Access Token opp');

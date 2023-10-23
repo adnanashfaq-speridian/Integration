@@ -71,7 +71,7 @@ public without sharing class ContactIntegration {
     }
 
     @future(callout=true)
-    public static void updateContact(String ContactId){
+    public static void updateContact(String ContactId, String externalID){
         ContactIntegration acc1= new ContactIntegration();
         String accessToken=acc1.ReturnAccessToken(acc1);
         System.debug(accessToken + '###Access Token con');

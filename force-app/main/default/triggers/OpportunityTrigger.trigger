@@ -23,7 +23,7 @@ Trigger OpportunityTrigger on Opportunity (after insert , before update , after 
     if(trigger.isUpdate && trigger.isAfter){
         for(Opportunity a:Trigger.new) {
             if(a.Integration_Action__c == 'YES'){
-                OpportunityIntegration.updateOpportunity(a.id); 
+                OpportunityIntegration.updateOpportunity(a.id, a.External_ID__c); 
             }
         }   
     }   

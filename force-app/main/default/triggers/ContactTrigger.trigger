@@ -23,7 +23,7 @@ Trigger ContactTrigger on Contact (after insert , before update , after update){
     if(trigger.isUpdate && trigger.isAfter){
         for(Contact a:Trigger.new) {
             if(a.Integration_Action__c == 'YES'){
-                ContactIntegration.updateContact(a.id); 
+                ContactIntegration.updateContact(a.id, a.External_ID__c); 
             }
         }   
     }   

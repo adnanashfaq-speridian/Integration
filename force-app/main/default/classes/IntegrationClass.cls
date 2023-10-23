@@ -80,7 +80,7 @@ public without sharing class IntegrationClass {
     }
 
     @future(callout=true)
-    public static void updateAccount(String AccountId){
+    public static void updateAccount(String AccountId, String externalID){
         IntegrationClass acc1= new IntegrationClass();
         String accessToken=acc1.ReturnAccessToken(acc1);
         System.debug(accessToken + '###Access Token acc');

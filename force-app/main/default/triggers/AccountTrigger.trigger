@@ -23,7 +23,7 @@ Trigger AccountTrigger on Account (after insert , before update , after update){
     if(trigger.isUpdate && trigger.isAfter){
         for(Account a:Trigger.new) {
             if(a.Integration_Action__c == 'YES'){
-                IntegrationClass.updateAccount(a.id); 
+                IntegrationClass.updateAccount(a.id, a.External_ID__c); 
             }
         }   
     }   
