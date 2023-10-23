@@ -31,6 +31,7 @@ public without sharing class IntegrationClass {
             jsGen.writeStartObject();
             jsGen.writeStringField('Name', acc.Name);
             jsGen.writeStringField('External_ID__c', acc.Id);
+            jsGen.writeBooleanField('IsFromIntegration__c' , true); 
             if(acc.website != null){
                 jsGen.writeStringField('website', acc.website);
             }

@@ -31,6 +31,7 @@ public without sharing class ContactIntegration {
             jsGen.writeStartObject();
             jsGen.writeStringField('LastName', con.LastName);
             jsGen.writeStringField('External_ID__c', con.Id);
+            jsGen.writeBooleanField('IsFromIntegration__c' , true);
             jsGen.writeEndObject();
         }
         String jsonData = jsGen.getAsString();

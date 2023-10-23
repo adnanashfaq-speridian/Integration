@@ -30,6 +30,7 @@ public without sharing class OpportunityIntegration {
             jsGen.writeStartObject();
             jsGen.writeStringField('Name', opp.Name);
             jsGen.writeStringField('External_ID__c', opp.Id);
+            jsGen.writeBooleanField('IsFromIntegration__c' , true);
             jsGen.writeEndObject();
         }
      
