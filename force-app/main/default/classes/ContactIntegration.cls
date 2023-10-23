@@ -1,4 +1,4 @@
-public without sharing class OpportunityIntegration {
+public without sharing class ContactIntegration {
     //Use your Client Id 
     String clientId ='3MVG9fe4g9fhX0E59dfIZ4Ri9oO_n.RP1X.8sz6v5lYl6B7KTifXSvxS.9NGzmZ3JqdanB_M7BPU6tKqzqqdi';
     //Use your Client Secret
@@ -14,7 +14,7 @@ public without sharing class OpportunityIntegration {
         public String access_token;
     }
     
-    public String ReturnAccessToken(OpportunityIntegration Acc){
+    public String ReturnAccessToken(ContactIntegration Acc){
         String reqbody = 'grant_type=client_credentials&client_id='+clientId+'&client_secret='+clientSecret;
         Http h= new Http();
         HttpRequest req= new HttpRequest();
@@ -29,15 +29,15 @@ public without sharing class OpportunityIntegration {
     }
     
     @future(callout=true)
-    public static void createOpportunity(String OpportunityId){
-        OpportunityIntegration acc1= new OpportunityIntegration();
+    public static void createContact(String ContactId){
+        ContactIntegration acc1= new ContactIntegration();
         String accessToken=acc1.ReturnAccessToken(acc1);
         System.debug(accessToken+'###AP');
         if(accessToken!=null){
             //Change “ap4” in url to your Destination Org
-            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Opportunity';  
-            
-            string jsonstr = generateJSONFormatDataforOpportunity(OpportunityId);
+            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Contact';  
+            //String jsonstr='{"Name":"'+ Accname +'","Phone":"'+ Phone +'","Website":"'+ Website +'"}';
+            string jsonstr = generateJSONFormatDataforContact(ContactId);
             Http h2= new Http();
             HttpRequest req2= new HttpRequest();
             req2.setHeader('Authorization','Bearer ' + accessToken);
@@ -53,16 +53,15 @@ public without sharing class OpportunityIntegration {
         }
     }
    
-    public static string generateJSONFormatDataforOpportunity(Id OpportunityId){
+    public static string generateJSONFormatDataforContact(Id ContactId){
         JSONGenerator jsGen = JSON.createGenerator(true);      
         
-        for(Opportunity opp : [SELECT Id, name FROM Opportunity WHERE Id =: OpportunityId]){
+        for(Contact con : [SELECT Id, LastName FROM Contact WHERE Id =: ContactId]){
             
             jsGen.writeStartObject();
-            jsGen.writeStringField('Name', opp.Name);
+            jsGen.writeStringField('LastName', con.LastName);
             jsGen.writeEndObject();
         }
-     
         String jsonData = jsGen.getAsString();
         System.debug('json format Data==> ' + jsonData);
         return jsonData;
