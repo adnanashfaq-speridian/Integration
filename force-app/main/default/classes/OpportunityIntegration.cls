@@ -29,6 +29,7 @@ public without sharing class OpportunityIntegration {
             
             jsGen.writeStartObject();
             jsGen.writeStringField('Name', opp.Name);
+            jsGen.writeStringField('External_ID__c', opp.Id);
             jsGen.writeEndObject();
         }
      
@@ -68,7 +69,7 @@ public without sharing class OpportunityIntegration {
         String accessToken=acc1.ReturnAccessToken(acc1);
         System.debug(accessToken + '###Access Token opp');
         if(accessToken!=null){
-            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Opportunity';  
+            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Opportunity'+OpportunityId;  
             
             string jsonstr = generateJSONFormatDataforOpportunity(OpportunityId);
             Http h2= new Http();
@@ -77,7 +78,7 @@ public without sharing class OpportunityIntegration {
             req2.setHeader('Content-Type','application/json');
             req2.setHeader('accept','application/json');
             req2.setBody(jsonstr);
-            req2.setMethod('POST');
+            req2.setMethod('PATCH');
             req2.setEndpoint(endPoint);
             HttpResponse res2=h2.send(req2);
             System.debug(res2+'###a###');

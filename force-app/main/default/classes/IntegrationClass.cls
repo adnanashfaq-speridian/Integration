@@ -30,6 +30,7 @@ public without sharing class IntegrationClass {
             
             jsGen.writeStartObject();
             jsGen.writeStringField('Name', acc.Name);
+            jsGen.writeStringField('External_ID__c', acc.Id);
             if(acc.website != null){
                 jsGen.writeStringField('website', acc.website);
             }
@@ -77,7 +78,7 @@ public without sharing class IntegrationClass {
         System.debug(accessToken + '###Access Token acc');
         if(accessToken!=null){
             //Change “ap4” in url to your Destination Org
-            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Account';  
+            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Account'+AccountId;  
             //String jsonstr='{"Name":"'+ Accname +'","Phone":"'+ Phone +'","Website":"'+ Website +'"}';
             string jsonstr = generateJSONFormatDataforAccount(AccountId);
             Http h2= new Http();
@@ -86,7 +87,7 @@ public without sharing class IntegrationClass {
             req2.setHeader('Content-Type','application/json');
             req2.setHeader('accept','application/json');
             req2.setBody(jsonstr);
-            req2.setMethod('POST');
+            req2.setMethod('PATCH');
             req2.setEndpoint(endPoint);
             HttpResponse res2=h2.send(req2);
             System.debug(res2+'###a###');
