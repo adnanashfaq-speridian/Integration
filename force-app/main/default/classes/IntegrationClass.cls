@@ -1,4 +1,4 @@
-public class IntegrationClass {
+public without sharing class IntegrationClass {
     //Use your Client Id 
     String clientId ='3MVG9fe4g9fhX0E59dfIZ4Ri9oO_n.RP1X.8sz6v5lYl6B7KTifXSvxS.9NGzmZ3JqdanB_M7BPU6tKqzqqdi';
     //Use your Client Secret
