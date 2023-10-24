@@ -51,8 +51,8 @@ public without sharing class ContactIntegration {
         System.debug(accessToken+'###AP');
         if(accessToken!=null){
             
-            String endPoint = 'https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Contact';
-            //String endPoint='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/data/v32.0/sobjects/Contact';  
+            String endPoint = 'https://speridiantechnologiesllc3.my.salesforce.com/services/apexrest/Contact/';
+            //String endPoint = 'https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/apexrest/Contact/';
             
             string jsonstr = generateJSONFormatDataforContact(ContactId);
             Http h2= new Http();
@@ -91,8 +91,6 @@ public without sharing class ContactIntegration {
             req2.setEndpoint(endPoint);
             HttpResponse res2=h2.send(req2);
             System.debug(res2+'###a###');
-           // deserializeResponse deresp= (deserializeResponse)System.JSON.deserialize(res2.getBody(),deserializeResponse.class);
-           // System.debug('### Deserialized Response ###'+deresp);
         }
     }
 }

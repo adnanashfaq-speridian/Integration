@@ -1,7 +1,7 @@
 @RestResource(urlMapping='/Opportunity/*')
 global with sharing class OpportunityRestServices {
     
-    //newly added POST method for creating account record
+    //newly added POST method for creating opp record
     @HttpPost
     global static ID createOpportunity() {
         RestRequest req = RestContext.request;

@@ -1,7 +1,7 @@
 @RestResource(urlMapping='/Contact/*')
 global with sharing class ContactRestServices {
     
-    //newly added POST method for creating account record
+    //newly added POST method for creating contact record
     @HttpPost
     global static ID createContact() {
         RestRequest req = RestContext.request;

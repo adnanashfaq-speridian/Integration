@@ -52,8 +52,8 @@ public without sharing class OpportunityIntegration {
         System.debug(accessToken+'###AP');
         if(accessToken!=null){
             
-            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Opportunity';  
-            //String endPoint='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/data/v32.0/sobjects/Opportunity';  
+            String endPoint = 'https://speridiantechnologiesllc3.my.salesforce.com/services/apexrest/Opportunity/';
+            //String endPoint = 'https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/apexrest/Opportunity/';
             
             string jsonstr = generateJSONFormatDataforOpportunity(OpportunityId);
             Http h2= new Http();

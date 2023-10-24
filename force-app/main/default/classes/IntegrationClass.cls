@@ -44,8 +44,7 @@ public without sharing class IntegrationClass {
                 jsGen.writeStringField('Phone', acc.Phone);
             }
             jsGen.writeEndObject();
-        }
-        
+        }        
      
         String jsonData = jsGen.getAsString();
         System.debug('json format Data==> ' + jsonData);
@@ -58,9 +57,6 @@ public without sharing class IntegrationClass {
         String accessToken=acc1.ReturnAccessToken(acc1);
         System.debug(accessToken+'###AP');
         if(accessToken!=null){
-            
-            //String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Account';  
-            //String endPoint='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/data/v32.0/sobjects/Account'; 
             
             String endPoint = 'https://speridiantechnologiesllc3.my.salesforce.com/services/apexrest/Account/';
             //String endPoint = 'https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/apexrest/Account/';
@@ -83,8 +79,6 @@ public without sharing class IntegrationClass {
             updateAcc.External_ID__c = apiResponse;
             updateAcc.IsFromIntegration__c = True;
             update updateAcc;
-            //deserializeResponse deresp= (deserializeResponse)System.JSON.deserialize(res2.getBody(),deserializeResponse.class);
-            //System.debug('### Deserialized Response ###'+deresp);
         }
     }
 
@@ -109,8 +103,10 @@ public without sharing class IntegrationClass {
             req2.setEndpoint(endPoint);
             HttpResponse res2=h2.send(req2);
             System.debug(res2+'###a###');
-          //  deserializeResponse deresp= (deserializeResponse)System.JSON.deserialize(res2.getBody(),deserializeResponse.class);
-          //  System.debug('### Deserialized Response ###'+deresp);
+            
+            Account updateAcc = [select id, name from account where id =: AccountId];
+            updateAcc.IsFromIntegration__c = True;
+            update updateAcc;
         }
     }
 }
