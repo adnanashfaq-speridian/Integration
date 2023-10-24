@@ -4,11 +4,8 @@ global with sharing class AccountRestServices {
     //newly added POST method for creating account record
     @HttpPost
     global static ID createAccount() {
-        RestRequest req = RestContext.request; 
+        RestRequest req = RestContext.request;
 
-        RestResponse res = Restcontext.response;
-        System.debug('Request Headers-->'+req.headers);
-        System.debug('Request Method-->'+req.httpMethod);
         System.debug('Request Body-->'+req.requestBody.tostring());
         Account Acc = (Account) JSON.deserialize(req.requestBody.tostring(), Account.class);
         insert Acc;
