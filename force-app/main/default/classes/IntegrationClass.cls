@@ -30,8 +30,7 @@ public without sharing class IntegrationClass {
     
     public static string generateJSONFormatDataforAccount(Id AccountId){
         JSONGenerator jsGen = JSON.createGenerator(true);
-      
-        
+
         for(Account acc : [SELECT Id, name, website, Phone FROM Account WHERE Id =: AccountId]){
             
             jsGen.writeStartObject();
@@ -60,8 +59,11 @@ public without sharing class IntegrationClass {
         System.debug(accessToken+'###AP');
         if(accessToken!=null){
             
-            String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Account';  
+            //String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Account';  
             //String endPoint='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/data/v32.0/sobjects/Account'; 
+            
+            String endPoint = 'https://speridiantechnologiesllc3.my.salesforce.com/services/apexrest/Account/';
+            //String endPoint = 'https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/apexrest/Account/';
            
             string jsonstr = generateJSONFormatDataforAccount(AccountId);
             Http h2= new Http();
@@ -73,9 +75,16 @@ public without sharing class IntegrationClass {
             req2.setMethod('POST');
             req2.setEndpoint(endPoint);
             HttpResponse res2=h2.send(req2);
-            System.debug(res2+'###a###');
-            deserializeResponse deresp= (deserializeResponse)System.JSON.deserialize(res2.getBody(),deserializeResponse.class);
-            System.debug('### Deserialized Response ###'+deresp);
+            System.debug(res2.getbody() +'##21111###');
+
+            String apiResponse = res2.getbody().replaceAll('"','');
+
+            Account updateAcc = [select id, name from account where id =: AccountId];
+            updateAcc.External_ID__c = apiResponse;
+            updateAcc.IsFromIntegration__c = True;
+            update updateAcc;
+            //deserializeResponse deresp= (deserializeResponse)System.JSON.deserialize(res2.getBody(),deserializeResponse.class);
+            //System.debug('### Deserialized Response ###'+deresp);
         }
     }
 
