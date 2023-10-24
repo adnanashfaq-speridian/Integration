@@ -28,7 +28,7 @@ public without sharing class OpportunityIntegration {
         return resp1.access_token;
     }
 
-    public static string generateJSONFormatDataforOpportunity(Id OpportunityId){
+    public static string generateJSONFormatDataforOpportunity(Id OpportunityId, boolean isCreate){
         JSONGenerator jsGen = JSON.createGenerator(true);      
         
         for(Opportunity opp : [SELECT Id, name FROM Opportunity WHERE Id =: OpportunityId]){
@@ -36,7 +36,9 @@ public without sharing class OpportunityIntegration {
             jsGen.writeStartObject();
             jsGen.writeStringField('Name', opp.Name);
             jsGen.writeStringField('External_ID__c', opp.Id);
-            jsGen.writeBooleanField('IsFromIntegration__c' , true);
+            if(isCreate == false){
+                jsGen.writeBooleanField('IsFromIntegration__c' , true); 
+            }
             jsGen.writeEndObject();
         }
      
@@ -55,7 +57,7 @@ public without sharing class OpportunityIntegration {
             String endPoint = 'https://speridiantechnologiesllc3.my.salesforce.com/services/apexrest/Opportunity/';
             //String endPoint = 'https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/apexrest/Opportunity/';
             
-            string jsonstr = generateJSONFormatDataforOpportunity(OpportunityId);
+            string jsonstr = generateJSONFormatDataforOpportunity(OpportunityId, true);
             Http h2= new Http();
             HttpRequest req2= new HttpRequest();
             req2.setHeader('Authorization','Bearer ' + accessToken);
@@ -81,7 +83,7 @@ public without sharing class OpportunityIntegration {
             String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Opportunity/'+externalID;  
             //String endPoint='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/data/v32.0/sobjects/Opportunity/'+externalID;  
             
-            string jsonstr = generateJSONFormatDataforOpportunity(OpportunityId);
+            string jsonstr = generateJSONFormatDataforOpportunity(OpportunityId, false);
             Http h2= new Http();
             HttpRequest req2= new HttpRequest();
             req2.setHeader('Authorization','Bearer ' + accessToken);

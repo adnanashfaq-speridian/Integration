@@ -28,7 +28,7 @@ public without sharing class ContactIntegration {
         return resp1.access_token;
     }
     
-    public static string generateJSONFormatDataforContact(Id ContactId){
+    public static string generateJSONFormatDataforContact(Id ContactId, boolean isCreate){
         JSONGenerator jsGen = JSON.createGenerator(true);      
         
         for(Contact con : [SELECT Id, LastName FROM Contact WHERE Id =: ContactId]){
@@ -36,7 +36,9 @@ public without sharing class ContactIntegration {
             jsGen.writeStartObject();
             jsGen.writeStringField('LastName', con.LastName);
             jsGen.writeStringField('External_ID__c', con.Id);
-            jsGen.writeBooleanField('IsFromIntegration__c' , true);
+            if(isCreate == false){
+                jsGen.writeBooleanField('IsFromIntegration__c' , true); 
+            }
             jsGen.writeEndObject();
         }
         String jsonData = jsGen.getAsString();
@@ -54,7 +56,7 @@ public without sharing class ContactIntegration {
             String endPoint = 'https://speridiantechnologiesllc3.my.salesforce.com/services/apexrest/Contact/';
             //String endPoint = 'https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/apexrest/Contact/';
             
-            string jsonstr = generateJSONFormatDataforContact(ContactId);
+            string jsonstr = generateJSONFormatDataforContact(ContactId, true);
             Http h2= new Http();
             HttpRequest req2= new HttpRequest();
             req2.setHeader('Authorization','Bearer ' + accessToken);
@@ -80,7 +82,7 @@ public without sharing class ContactIntegration {
             String endPoint = 'https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Contact/'+externalID;
             //String endPoint='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/data/v32.0/sobjects/Contact/'+externalID;  
             
-            string jsonstr = generateJSONFormatDataforContact(ContactId);
+            string jsonstr = generateJSONFormatDataforContact(ContactId, false);
             Http h2= new Http();
             HttpRequest req2= new HttpRequest();
             req2.setHeader('Authorization','Bearer ' + accessToken);

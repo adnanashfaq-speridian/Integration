@@ -28,7 +28,7 @@ public without sharing class IntegrationClass {
         return resp1.access_token;
     }
     
-    public static string generateJSONFormatDataforAccount(Id AccountId){
+    public static string generateJSONFormatDataforAccount(Id AccountId, boolean isCreate){
         JSONGenerator jsGen = JSON.createGenerator(true);
 
         for(Account acc : [SELECT Id, name, website, Phone FROM Account WHERE Id =: AccountId]){
@@ -36,7 +36,9 @@ public without sharing class IntegrationClass {
             jsGen.writeStartObject();
             jsGen.writeStringField('Name', acc.Name);
             jsGen.writeStringField('External_ID__c', acc.Id);
-            jsGen.writeBooleanField('IsFromIntegration__c' , true); 
+            if(isCreate == false){
+                jsGen.writeBooleanField('IsFromIntegration__c' , true); 
+            }
             if(acc.website != null){
                 jsGen.writeStringField('website', acc.website);
             }
@@ -61,7 +63,7 @@ public without sharing class IntegrationClass {
             String endPoint = 'https://speridiantechnologiesllc3.my.salesforce.com/services/apexrest/Account/';
             //String endPoint = 'https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/apexrest/Account/';
            
-            string jsonstr = generateJSONFormatDataforAccount(AccountId);
+            string jsonstr = generateJSONFormatDataforAccount(AccountId, true);
             Http h2= new Http();
             HttpRequest req2= new HttpRequest();
             req2.setHeader('Authorization','Bearer ' + accessToken);
@@ -92,7 +94,7 @@ public without sharing class IntegrationClass {
             String endPoint='https://speridiantechnologiesllc3.my.salesforce.com/services/data/v32.0/sobjects/Account/'+externalID;  
             //String endPoint='https://page-agility-6071-dev-ed.scratch.my.salesforce.com/services/data/v32.0/sobjects/Account/'+externalID; 
             
-            string jsonstr = generateJSONFormatDataforAccount(AccountId);
+            string jsonstr = generateJSONFormatDataforAccount(AccountId, false);
             Http h2= new Http();
             HttpRequest req2= new HttpRequest();
             req2.setHeader('Authorization','Bearer ' + accessToken);

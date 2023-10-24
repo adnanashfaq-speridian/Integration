@@ -10,6 +10,7 @@ Trigger AccountTrigger on Account (after insert , before update , after update){
 
     if(trigger.isUpdate && trigger.isBefore){
         for(Account a:Trigger.new) {
+            system.debug('a.IsFromIntegration__c BEFORE ' + a.IsFromIntegration__c);
             if(a.IsFromIntegration__c == true ){
                 a.IsFromIntegration__c = false;
                 a.Integration_Action__c = 'NO';
@@ -22,6 +23,7 @@ Trigger AccountTrigger on Account (after insert , before update , after update){
 
     if(trigger.isUpdate && trigger.isAfter){
         for(Account a:Trigger.new) {
+            system.debug('a.IsFromIntegration__c AFTER ' + a.IsFromIntegration__c);
             if(a.Integration_Action__c == 'YES'){
                 IntegrationClass.updateAccount(a.id, a.External_ID__c); 
             }
