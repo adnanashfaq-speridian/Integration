@@ -28,6 +28,7 @@ public without sharing class IntegrationClass {
         return resp1.access_token;
     }
     
+    //Get the fields from metadata and generate JSON accordingly
     public static string generateJSONFormatDataforAccount(Id AccountId, boolean isCreate){
         JSONGenerator jsGen = JSON.createGenerator(true);
 
