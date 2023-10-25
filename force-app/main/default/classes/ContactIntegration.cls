@@ -68,7 +68,13 @@ public without sharing class ContactIntegration {
             HttpResponse res2=h2.send(req2);
             System.debug(res2+'###a###');
             deserializeResponse deresp= (deserializeResponse)System.JSON.deserialize(res2.getBody(),deserializeResponse.class);
-            System.debug('### Deserialized Response ###'+deresp);
+            
+            String apiResponse = res2.getbody().replaceAll('"','');
+
+            Contact updateAcc = [select id, lastname from Contact where id =: ContactId];
+            updateAcc.External_ID__c = apiResponse;
+            updateAcc.IsFromIntegration__c = True;
+            update updateAcc;
         }
     }
 
@@ -93,6 +99,10 @@ public without sharing class ContactIntegration {
             req2.setEndpoint(endPoint);
             HttpResponse res2=h2.send(req2);
             System.debug(res2+'###a###');
+            
+            Contact updateAcc = [select id, lastname from Contact where id =: ContactId];
+            updateAcc.IsFromIntegration__c = True;
+            update updateAcc;
         }
     }
 }
