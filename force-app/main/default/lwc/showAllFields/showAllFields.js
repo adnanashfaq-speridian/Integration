@@ -16,8 +16,13 @@ export default class ShowAllFields extends LightningElement {
             }
         }
         else if (error) {
-            console.log('Error while get fields');
+            console.log('Error while getting fields');
             this.lstFields = [];
         }
+    }
+
+    handleChange(e) {
+        this.value = e.detail.value;
+        console.log(this.value);
     }
 }

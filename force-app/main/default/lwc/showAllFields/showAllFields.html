@@ -1,5 +1,21 @@
 <template>
     <div class="slds-card">
-        <lightning-combobox name="fieldList" label='Field List' options={lstFields} placeholder="Select Field"></lightning-combobox>
+        <!--<lightning-combobox name="fieldList" label='Field List' options={lstFields} placeholder="Select Field"></lightning-combobox>
+
+          
+        <template for:each={lstFields} for:item="field">
+            <li key={field.value}>
+                {field.label}
+            </li>
+        </template> -->
+
+        <lightning-checkbox-group 
+            name="Account Fields"
+            label="Checkbox Group"
+            options={lstFields}
+            value={lstFields}
+            onchange={handleChange}>
+        </lightning-checkbox-group>
+      
     </div>
 </template>
