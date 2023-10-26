@@ -1,17 +1,10 @@
 <template>
     <div class="slds-card">
-        <!--<lightning-combobox name="fieldList" label='Field List' options={lstFields} placeholder="Select Field"></lightning-combobox>
-
-          
-        <template for:each={lstFields} for:item="field">
-            <li key={field.value}>
-                {field.label}
-            </li>
-        </template> -->
-
+        <lightning-button label="Set Metadata" variant="brand" onclick={doSearch} class="slds-align_absolute-center"></lightning-button>
+       
         <lightning-checkbox-group 
             name="Account Fields"
-            label="Checkbox Group"
+            label="Account Fields"
             options={lstFields}
             value={lstFields}
             onchange={handleChange}>
