@@ -30,11 +30,28 @@ public without sharing class IntegrationClass {
     
     //Get the fields from metadata and generate JSON accordingly
     public static string generateJSONFormatDataforAccount(Id AccountId, boolean isCreate){
-        JSONGenerator jsGen = JSON.createGenerator(true);
+        
+        LWC_Lookup_Field__mdt[] lookupFieldMDT = [SELECT Account_Selected_Fields__c FROM LWC_Lookup_Field__mdt];
+        String stringOfFields = lookupFieldMDT[0].Account_Selected_Fields__c.replaceAll('\\[', '').replaceAll('\\]', '');
+        System.debug('stringOfFields == '+stringOfFields);
 
+        List<String> lstFields = lookupFieldMDT[0].Account_Selected_Fields__c.split(',');
+        List<String> lstFieldstobeMapped = new List<String>();
+        System.debug('lstFields =-- '+lstFields);
+
+        for (string fieldMappings : lstFields) {
+            System.debug('field mapping !! = '+fieldMappings.replaceAll('\\[', '').replaceAll('\\]', ''));
+            lstFieldstobeMapped.add(fieldMappings.replaceAll('\\[', '').replaceAll('\\]', ''));
+        }
+        System.debug('lstFieldstobeMapped --- '+lstFieldstobeMapped);
+        JSONGenerator jsGen = JSON.createGenerator(true);
         for(Account acc : [SELECT Id, name, website, Phone FROM Account WHERE Id =: AccountId]){
             
             jsGen.writeStartObject();
+            for(string field: lstFieldstobeMapped ){
+                jsGen.writeStringField(field, field);
+            }
+     
             jsGen.writeStringField('Name', acc.Name);
             jsGen.writeStringField('External_ID__c', acc.Id);
             if(isCreate == false){
@@ -48,6 +65,30 @@ public without sharing class IntegrationClass {
             }
             jsGen.writeEndObject();
         }        
+
+        /*
+        Account accRecord = [SELECT Id, Name, AccountNumber, AccountSource, Description, NumberOfEmployees FROM Account where id ='0015g00001RCTc4AAH'  LIMIT 1];
+        // Create the Map
+        Map<String, String> accountFieldsMap = new Map<String, String>();
+        //retrieve a map of field API names and values
+        Map<String, Object> fieldstovalue = accRecord.getPopulatedFieldsAsMap();
+        //retrieve the field labels 
+        Map<String, Schema.SObjectField> fieldsMap = Schema.getGlobalDescribe().get('Account').getDescribe.fields.getMap();
+        //populating the required map with field labels as keys and their respective values as map values.
+        
+        for(String fieldApiName : fieldstovalue.keySet()){
+        
+            Object fieldValue = fieldstovalue.get(fieldApiName);
+            Schema.DescribeFieldResult fieldDescribe = fieldsMap.get(fieldApiName).getDescribe();
+            String fieldLabel = fieldDescribe.getLabel();
+            accountFieldsMap.put(fieldLabel, String.valueOf(fieldValue));
+        }
+        
+        //to print map values 
+        for(String fieldLabel : accountFieldsMap.keyset()){
+            system.debug('field label is '+fieldLabel +' and field value is '+accountFieldsMap.get(fieldLabel));
+        }
+*/        
      
         String jsonData = jsGen.getAsString();
         System.debug('json format Data==> ' + jsonData);

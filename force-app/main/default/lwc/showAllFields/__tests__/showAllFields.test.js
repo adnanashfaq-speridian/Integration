@@ -1,4 +1,4 @@
-import { createElement } from 'lwc';
+
 import ShowAllFields from 'c/showAllFields';
 
 describe('c-show-all-fields', () => {

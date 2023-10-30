@@ -26,7 +26,6 @@ export default class ShowAllFields extends LightningElement {
 
     handleChange(e) {
         this.value = e.detail.value;
-        console.log(this.value);
         this.selectedfields = e.detail.value;
     }
 
