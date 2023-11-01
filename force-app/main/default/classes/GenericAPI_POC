@@ -1,0 +1,19 @@
+public class GenericAPI_POC {
+    
+    public static void generateJSONforAPI(Id userIdd) {
+        
+        String userId = userIdd;
+        Bank__mdt[] bankMappings = [SELECT Bank_Code__c,SOQL_Query__c, JSON_Map__c, Bank_Name__c FROM Bank__mdt where bank_code__c = : 'HBL'];
+        system.debug(bankMappings[0].soql_query__c);
+        //String regExp = 'Payer';
+        //String replacement = userId;
+             
+        string soqlQuery1 = bankMappings[0].soql_query__c;//.replaceAll(regExp,replacement );//.replaceAll(regExp2, '').replaceAll(regExp3, '');
+        system.debug('SOQL 1 ==== '+soqlQuery1);       
+        
+        User payerUser =Database.query(soqlQuery1); 
+        system.debug('pay ' +payerUser);
+        // User payerUser = [SELECT FirstName, LastName, Contact.Email, Contact.MobilePhone, Contact.MailingCity, Contact.MailingCountry, AccountId, Account.CNIC__c, Account.NTN__c, Account.Customer_Code__c FROM User WHERE Id = :Payer LIMIT 1];
+        
+    }
+}
