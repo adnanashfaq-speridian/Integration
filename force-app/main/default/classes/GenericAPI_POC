@@ -13,6 +13,20 @@ public class GenericAPI_POC {
         system.debug('pay ' +payerUser);
         
         //Query metadata with key value pairs
+        Set<String> metadataTypes = new Set<String>();
+        for(String sObjectName: Schema.getGlobalDescribe().keySet()){
+            if(sObjectName.endsWith('__mdt')){
+                metadataTypes.add(sObjectName);
+            }
+        }
+        
+        List<EntityDefinition> entList = [SELECT QualifiedApiName, Label, LastModifiedBy.Name, LastModifiedDate 
+                                          FROM EntityDefinition WHERE QualifiedApiName IN :metadataTypes];
+        System.debug('entList: ' +entList);
+        for(EntityDefinition ent: entList){
+            System.debug('QualifiedApiName: ' + ent.QualifiedApiName);
+            System.debug('Label: ' + ent.Label);
+        }
         
     }
 }
